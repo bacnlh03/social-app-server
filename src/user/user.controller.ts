@@ -5,12 +5,18 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FilterUserDto } from './dto/filter-user.dto';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('User')
+@ApiBearerAuth()
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
   @UseGuards(AuthGuard)
+  @ApiQuery({ name: 'index' })
+  @ApiQuery({ name: 'limit' })
+  @ApiQuery({ name: 'search' })
   @Get()
   findAll(@Query() query: FilterUserDto): Promise<User[]> {
     return this.userService.findAll(query)
