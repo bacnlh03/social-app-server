@@ -17,7 +17,7 @@ export class User {
   @Column()
   isActive: boolean
 
-  @Column()
+  @Column({ nullable: true, default: null })
   refreshToken: string
 
   @CreateDateColumn()
